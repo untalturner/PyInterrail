@@ -55,8 +55,8 @@ def from_json(data):
     dictionary = json.loads(data)
 
     result = StopLocation(None, None, None, None)
-    result.id = dictionary[LOCATION_ID]
-    result.name = dictionary[LOCATION_NAME]
-    result.lon = dictionary[LOCATION_LONGITUDE]
-    result.lat = dictionary[LOCATION_LATITUDE]
+    result.id = dictionary.get(LOCATION_ID)
+    result.name = dictionary.get(LOCATION_NAME)
+    result.lon = dictionary.get(LOCATION_LONGITUDE)
+    result.lat = dictionary.get(LOCATION_LATITUDE)
     return result
