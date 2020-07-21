@@ -21,9 +21,9 @@ class StopLocation:
         the id of the stop location
     name : str
         the name of the stop location
-    lon : int
+    lon : float
         the longitude of the stop location
-    lat: int
+    lat: float
         the latitude of the stop location
     """
 
@@ -36,27 +36,30 @@ class StopLocation:
 
 def from_json(data):
     """
-    The method to parse a json to a StopLocation.
+    The method to parse a json to a list of StopLocation.
 
     Parameters
     ----------
     data : str
-        the json representation for the stop location
+        the json-encoded representation for the stop locations
 
     Returns
     -------
-    StopLocation
-        the stop location object
+    list
+        a list of StopLocations
     """
 
     if data is None:
         return None
 
-    dictionary = json.loads(data)
+    locations = data["stopLocationOrCoordLocation"]
 
-    result = StopLocation(None, None, None, None)
-    result.id = dictionary.get(LOCATION_ID)
-    result.name = dictionary.get(LOCATION_NAME)
-    result.lon = dictionary.get(LOCATION_LONGITUDE)
-    result.lat = dictionary.get(LOCATION_LATITUDE)
-    return result
+    results = []
+    for location in [x.get("StopLocation") for x in locations]:
+        result = StopLocation(None, None, None, None)
+        result.id = location.get(LOCATION_ID)
+        result.name = location.get(LOCATION_NAME)
+        result.lon = location.get(LOCATION_LONGITUDE)
+        result.lat = location.get(LOCATION_LATITUDE)
+        results.append(result)
+    return results
