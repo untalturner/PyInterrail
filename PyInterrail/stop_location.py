@@ -52,7 +52,10 @@ def from_json(data):
     if data is None:
         return None
 
-    locations = data["stopLocationOrCoordLocation"]
+    locations = data.get("stopLocationOrCoordLocation")
+
+    if locations is None:
+        return None
 
     results = []
     for location in [x.get("StopLocation") for x in locations]:
