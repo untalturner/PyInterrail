@@ -3,15 +3,13 @@
 import requests
 
 from PyInterrail.stop_location import from_json
-
-# Constants
-URL = "https://api.eurail.com/timetable/location.name"
+from PyInterrail.config import URL_GET_LOCATIONS
 
 
 class Client:
     """ The main class for the client """
 
-    def get_locations(name):
+    def get_locations(name: str):
         """
         The method to call Interrail server for list of locations.
 
@@ -27,5 +25,5 @@ class Client:
         """
 
         params = {'input': name}
-        response = requests.get(URL, params)
+        response = requests.get(URL_GET_LOCATIONS, params)
         return from_json(response.json())

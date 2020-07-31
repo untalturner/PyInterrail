@@ -1,0 +1,5 @@
+URL_GET_LOCATIONS = "https://api.eurail.com/timetable/location.name"
+LOCATION_ID = "extId"
+LOCATION_NAME = "name"
+LOCATION_LONGITUDE = "lon"
+LOCATION_LATITUDE = "lat"
