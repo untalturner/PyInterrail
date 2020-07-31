@@ -32,7 +32,8 @@ class StopLocation:
     def __str__(self):
         return f"id: {self.id}, name: {self.name},  long: {self.lon}, lat : {self.lat}"
 
-def from_json(data):
+
+def locations_from_json(data):
     """
     The method to parse a json to a list of StopLocation.
 

@@ -49,7 +49,7 @@ class Service:
                f"sleeper train: {self.sleeper_train}"
 
 
-def from_json(data):
+def service_from_json(data):
     """
     The method to parse a json to a Service.
 
@@ -69,15 +69,15 @@ def from_json(data):
 
     service = data
 
-    result = Service(origin_id=service.get("Origin").get("extId"), departure_time=service.get("Origin").get("time"),
-                     departure_date=service.get("Origin").get("date"),
-                     destination_id=service.get("Destination").get("extId"),
-                     arrival_time=service.get("Destination").get("time"),
-                     arrival_date=service.get("Destination").get("date"),
-                     train_name=service.get("Product").get("name"),
-                     train_operator=service.get("Product").get("operator"), sleeper_train=False)
+    result = Service(origin_id=service.get("Origin", {}).get("extId"), departure_time=service.get("Origin", {}).get("time"),
+                     departure_date=service.get("Origin", {}).get("date"),
+                     destination_id=service.get("Destination", {}).get("extId"),
+                     arrival_time=service.get("Destination", {}).get("time"),
+                     arrival_date=service.get("Destination", {}).get("date"),
+                     train_name=service.get("Product", {}).get("name"),
+                     train_operator=service.get("Product", {}).get("operator"), sleeper_train=False)
 
-    for note in [x for x in service.get("Notes").get("Note")]:
+    for note in [x for x in service.get("Notes", {}).get("Note")]:
         if "sleeper" in note.get("value"):
             result.sleeper_train = True
 
