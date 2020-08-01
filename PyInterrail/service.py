@@ -1,5 +1,6 @@
 import datetime
-from PyInterrail.config import FORMAT_DATE, FORMAT_HOURS
+from PyInterrail.config import FORMAT_DATE, FORMAT_HOURS, LOCATION_ID, SERVICE_DATE, SERVICE_TIME, SERVICE_OPERATOR, \
+    LOCATION_NAME, SERVICE_ORIGIN, SERVICE_DESTINATION, SERVICE_PRODUCT
 
 """The module which represents a service."""
 
@@ -72,18 +73,18 @@ def service_from_json(data):
     """
 
     if data is None:
-        raise ValueError("Error")
+        raise ValueError("Error. Please check the information")
 
     service = data
 
-    result = Service(origin_id=service.get("Origin", {}).get("extId"),
-                     departure_time=service.get("Origin", {}).get("time"),
-                     departure_date=service.get("Origin", {}).get("date"),
-                     destination_id=service.get("Destination", {}).get("extId"),
-                     arrival_time=service.get("Destination", {}).get("time"),
-                     arrival_date=service.get("Destination", {}).get("date"),
-                     train_name=service.get("Product", {}).get("name"),
-                     train_operator=service.get("Product", {}).get("operator"), sleeper_train=False)
+    result = Service(origin_id=service.get(SERVICE_ORIGIN, {}).get(LOCATION_ID),
+                     departure_time=service.get(SERVICE_ORIGIN, {}).get(SERVICE_TIME),
+                     departure_date=service.get(SERVICE_ORIGIN, {}).get(SERVICE_DATE),
+                     destination_id=service.get(SERVICE_DESTINATION, {}).get(LOCATION_ID),
+                     arrival_time=service.get(SERVICE_DESTINATION, {}).get(SERVICE_TIME),
+                     arrival_date=service.get(SERVICE_DESTINATION, {}).get(SERVICE_DATE),
+                     train_name=service.get(SERVICE_PRODUCT, {}).get(LOCATION_NAME),
+                     train_operator=service.get(SERVICE_PRODUCT, {}).get(SERVICE_OPERATOR), sleeper_train=False)
 
     for note in [x for x in service.get("Notes", {}).get("Note")]:
         if "sleeper" in note.get("value"):

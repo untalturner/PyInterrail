@@ -3,7 +3,7 @@
 import requests
 import datetime
 from PyInterrail.stop_location import locations_from_json
-from PyInterrail.config import URL_GET_LOCATIONS,URL_GET_TRIPS,FORMAT_DATE,FORMAT_HOURS
+from PyInterrail.config import URL_GET_LOCATIONS, URL_GET_TRIPS, FORMAT_DATE, FORMAT_HOURS
 from PyInterrail.trip import trips_from_json
 
 
@@ -50,7 +50,7 @@ def get_trips(origin_id: str, destination_id: str, time: str, date: str):
     try:
         datetime.datetime.strptime(date, FORMAT_DATE)
     except ValueError:
-        raise  ValueError("Incorrect date format, should be in format YYYY-MM-DD ")
+        raise ValueError("Incorrect date format, should be in format YYYY-MM-DD ")
     try:
         datetime.datetime.strptime(time, FORMAT_HOURS)
     except ValueError:
