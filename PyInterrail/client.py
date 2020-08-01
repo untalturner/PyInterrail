@@ -1,9 +1,9 @@
 """The module with the main functions."""
 
 import requests
-
+import datetime
 from PyInterrail.stop_location import locations_from_json
-from PyInterrail.config import URL_GET_LOCATIONS,URL_GET_TRIPS
+from PyInterrail.config import URL_GET_LOCATIONS,URL_GET_TRIPS,FORMAT_DATE,FORMAT_HOURS
 from PyInterrail.trip import trips_from_json
 
 
@@ -47,7 +47,14 @@ def get_trips(origin_id: str, destination_id: str, time: str, date: str):
     list
         a list of Trips
     """
-
+    try:
+        datetime.datetime.strptime(date, FORMAT_DATE)
+    except ValueError:
+        raise  ValueError("Incorrect date format, should be in format YYYY-MM-DD ")
+    try:
+        datetime.datetime.strptime(time, FORMAT_HOURS)
+    except ValueError:
+        raise ValueError("Incorrect time format, should be in format HH:MM:SS")
     params = {'originId': origin_id, 'destId': destination_id, 'date': date, 'time': time}
     response = requests.get(URL_GET_TRIPS, params)
     return trips_from_json(response.json())
