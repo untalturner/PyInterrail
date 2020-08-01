@@ -1,3 +1,6 @@
+import datetime
+from PyInterrail.config import FORMAT_DATE, FORMAT_HOURS
+
 """The module which represents a service."""
 
 
@@ -34,9 +37,13 @@ class Service:
         self.origin_id = origin_id
         self.departure_time = departure_time
         self.departure_date = departure_date
+        self.departure_date_object = datetime.datetime.strptime(f"{departure_date}{departure_time}",
+                                                                f"{FORMAT_DATE}{FORMAT_HOURS}")
         self.destination_id = destination_id
         self.arrival_time = arrival_time
         self.arrival_date = arrival_date
+        self.arrival_date_object = datetime.datetime.strptime(f"{arrival_date}{arrival_time}",
+                                                              f"{FORMAT_DATE}{FORMAT_HOURS}")
         self.train_name = train_name
         self.train_operator = train_operator
         self.sleeper_train = sleeper_train
@@ -69,7 +76,8 @@ def service_from_json(data):
 
     service = data
 
-    result = Service(origin_id=service.get("Origin", {}).get("extId"), departure_time=service.get("Origin", {}).get("time"),
+    result = Service(origin_id=service.get("Origin", {}).get("extId"),
+                     departure_time=service.get("Origin", {}).get("time"),
                      departure_date=service.get("Origin", {}).get("date"),
                      destination_id=service.get("Destination", {}).get("extId"),
                      arrival_time=service.get("Destination", {}).get("time"),
