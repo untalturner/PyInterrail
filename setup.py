@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="PyInterrail",
-    version="0.0.4",
+    version="1.1",
     author="Daniel Turner Cebriá",
     author_email="daniel.turner.cebria@gmail.com",
     description="Python interface for Interrail API",

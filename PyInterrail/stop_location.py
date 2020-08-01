@@ -2,11 +2,7 @@
 
 import json
 
-# Strings for JSON
-LOCATION_ID = "extId"
-LOCATION_NAME = "name"
-LOCATION_LONGITUDE = "lon"
-LOCATION_LATITUDE = "lat"
+from PyInterrail.config import LOCATION_ID, LOCATION_NAME, LOCATION_LONGITUDE, LOCATION_LATITUDE
 
 
 class StopLocation:
@@ -27,14 +23,17 @@ class StopLocation:
         the latitude of the stop location
     """
 
-    def __init__(self, id, name, lon, lat):
+    def __init__(self, id: str, name: str, lon: float, lat: float):
         self.id = id
         self.name = name
         self.lon = lon
         self.lat = lat
 
+    def __str__(self):
+        return f"id: {self.id}, name: {self.name},  long: {self.lon}, lat : {self.lat}"
 
-def from_json(data):
+
+def locations_from_json(data):
     """
     The method to parse a json to a list of StopLocation.
 
@@ -50,19 +49,17 @@ def from_json(data):
     """
 
     if data is None:
-        return None
+        raise ValueError("Error")
 
     locations = data.get("stopLocationOrCoordLocation")
 
     if locations is None:
-        return None
+        raise ValueError("Error")
 
     results = []
     for location in [x.get("StopLocation") for x in locations]:
-        result = StopLocation(None, None, None, None)
-        result.id = location.get(LOCATION_ID)
-        result.name = location.get(LOCATION_NAME)
-        result.lon = location.get(LOCATION_LONGITUDE)
-        result.lat = location.get(LOCATION_LATITUDE)
+        result = StopLocation(id=location.get(LOCATION_ID), name=location.get(LOCATION_NAME),
+                              lon=location.get(LOCATION_LONGITUDE),
+                              lat=location.get(LOCATION_LATITUDE))
         results.append(result)
     return results
