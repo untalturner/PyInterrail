@@ -55,6 +55,7 @@ def get_trips(origin_id: str, destination_id: str, time: str, date: str):
         datetime.datetime.strptime(time, FORMAT_HOURS)
     except ValueError:
         raise ValueError("Incorrect time format, should be in format HH:MM:SS")
+
     params = {'originId': origin_id, 'destId': destination_id, 'date': date, 'time': time}
     response = requests.get(URL_GET_TRIPS, params)
     return trips_from_json(response.json())
