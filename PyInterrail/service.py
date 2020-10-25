@@ -37,8 +37,9 @@ class Service:
         the boolean to indicate that the train has beds
     """
 
-    def __init__(self, origin_id: str, origin_name: str, departure_time: str, departure_date: str, destination_id: str,
-                 destination_name: str, arrival_time: str, arrival_date: str, train_name: str, train_operator: str, sleeper_train: bool):
+    def __init__(self, origin_id: str, origin_name: str, departure_time: str, departure_date: str,
+                 destination_id: str, destination_name: str, arrival_time: str, arrival_date: str, train_name: str,
+                 train_operator: str, sleeper_train: bool):
         self.origin_id = origin_id
         self.origin_name = origin_name
         self.departure_time = departure_time
@@ -56,8 +57,9 @@ class Service:
         self.sleeper_train = sleeper_train
 
     def __str__(self):
-        return f"origin id: {self.origin_id}, origin_name: {self.origin_name}, departure time: {self.departure_time}, " \
-               f"departure date: {self.departure_date}, destination id: {self.destination_id}, destination_name: {self.destination_name}, " \
+        return f"origin id: {self.origin_id}, origin_name: {self.origin_name}," \
+               f"departure time: {self.departure_time}, departure date: {self.departure_date}, " \
+               f"destination id: {self.destination_id}, destination_name: {self.destination_name}, " \
                f"arrival time: {self.arrival_time}, arrival date: {self.arrival_date}, " \
                f"train name: {self.train_name}, train operator: {self.train_operator}, " \
                f"sleeper train: {self.sleeper_train}"
