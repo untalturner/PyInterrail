@@ -13,14 +13,18 @@ class Service:
 
     Attributes
     ----------
-    origin_id : str
+    origin_id: str
         the id of the origin
-    departure_time : str
+    origin_name: str
+        the name of the origin
+    departure_time: str
         the departure time
-    departure_date : str
+    departure_date: str
         the departure date
     destination_id: str
         the id of the destination
+    destination_name: str
+        the name of the destination
     arrival_time: str
         the arrival time
     arrival_date: str
@@ -33,14 +37,17 @@ class Service:
         the boolean to indicate that the train has beds
     """
 
-    def __init__(self, origin_id: str, departure_time: str, departure_date: str, destination_id: str,
-                 arrival_time: str, arrival_date: str, train_name: str, train_operator: str, sleeper_train: bool):
+    def __init__(self, origin_id: str, origin_name: str, departure_time: str, departure_date: str,
+                 destination_id: str, destination_name: str, arrival_time: str, arrival_date: str, train_name: str,
+                 train_operator: str, sleeper_train: bool):
         self.origin_id = origin_id
+        self.origin_name = origin_name
         self.departure_time = departure_time
         self.departure_date = departure_date
         self.departure_date_object = datetime.datetime.strptime(f"{departure_date}{departure_time}",
                                                                 f"{FORMAT_DATE}{FORMAT_HOURS}")
         self.destination_id = destination_id
+        self.destination_name = destination_name
         self.arrival_time = arrival_time
         self.arrival_date = arrival_date
         self.arrival_date_object = datetime.datetime.strptime(f"{arrival_date}{arrival_time}",
@@ -50,8 +57,9 @@ class Service:
         self.sleeper_train = sleeper_train
 
     def __str__(self):
-        return f"origin id: {self.origin_id}, departure time: {self.departure_time}, " \
-               f"departure date: {self.departure_date}, destination id: {self.destination_id}, " \
+        return f"origin id: {self.origin_id}, origin_name: {self.origin_name}," \
+               f"departure time: {self.departure_time}, departure date: {self.departure_date}, " \
+               f"destination id: {self.destination_id}, destination_name: {self.destination_name}, " \
                f"arrival time: {self.arrival_time}, arrival date: {self.arrival_date}, " \
                f"train name: {self.train_name}, train operator: {self.train_operator}, " \
                f"sleeper train: {self.sleeper_train}"
@@ -78,9 +86,11 @@ def service_from_json(data):
     service = data
 
     result = Service(origin_id=service.get(SERVICE_ORIGIN, {}).get(LOCATION_ID),
+                     origin_name=service.get(SERVICE_ORIGIN, {}).get(LOCATION_NAME),
                      departure_time=service.get(SERVICE_ORIGIN, {}).get(SERVICE_TIME),
                      departure_date=service.get(SERVICE_ORIGIN, {}).get(SERVICE_DATE),
                      destination_id=service.get(SERVICE_DESTINATION, {}).get(LOCATION_ID),
+                     destination_name=service.get(SERVICE_DESTINATION, {}).get(LOCATION_NAME),
                      arrival_time=service.get(SERVICE_DESTINATION, {}).get(SERVICE_TIME),
                      arrival_date=service.get(SERVICE_DESTINATION, {}).get(SERVICE_DATE),
                      train_name=service.get(SERVICE_PRODUCT, {}).get(LOCATION_NAME),
